@@ -48,7 +48,7 @@ function playRound(playerSelection, computerSelection) {
         return 0;
     } else if (result === 1) {
         console.log(`You drew! You both picked ${computerSelection}`);
-        return 0;
+        return playRound(getUserChoice(), getComputerChoice());
     } else if (result === 2) {
         console.log(`You won! ${playerSelection} beats ${computerSelection}`);
         return 1;
@@ -57,8 +57,26 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function playGame() {
+    console.log("============================================\n============================================")
+    let score = 0;
     for (i=0;i<amountOfRounds;i++) {
-        playRound(getUserChoice(), getComputerChoice());
+        score += playRound(getUserChoice(), getComputerChoice());
+        console.log(score);
+    }
+    console.log(`You got a score of ${score} out of ${amountOfRounds}`);
+    askToPlayAgain();
+}
+
+function askToPlayAgain() {
+    console.log("Would you like to play again?");
+    let userInput = prompt("Would you like to play again? Choose yes or no: ").toLowerCase();
+    if (userInput === "yes") {
+        playGame();
+    } else if (userInput === "no") {
+        console.log("See you next time.");
+    } else {
+        console.log("Please type either 'yes' or 'no' to the following question.");
+        askToPlayAgain();
     }
 }
 
