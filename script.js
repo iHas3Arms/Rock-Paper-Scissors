@@ -3,6 +3,11 @@ let buttonPaper = document.getElementById("paper");
 let buttonScissors = document.getElementById("scissors");
 let allButtons = [buttonRock, buttonPaper, buttonScissors];
 
+let playerScore = document.getElementById("player-score");
+let computerScore = document.getElementById("cpu-score");
+
+let output = document.getElementById("output");
+
 let choices = ["rock", "paper", "scissors"];
 let amountOfRounds = 5;
 
@@ -61,12 +66,17 @@ function playRound(playerSelection, computerSelection) {
     computerSelection = computerSelection[0].toUpperCase() + computerSelection.slice(1, computerSelection.length);
 
     if (result === 0) {
-        console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
+        computerScore.textContent = parseInt(computerScore.textContent) + 1;
+        output.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+        // console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
         return 0;
     } else if (result === 1) {
-        console.log(`You drew! You both picked ${computerSelection}`);
+        output.textContent = `You drew! You both picked ${computerSelection}`;
+        // console.log(`You drew! You both picked ${computerSelection}`);
         return playRound(getUserChoice(), getComputerChoice());
     } else if (result === 2) {
+        playerScore.textContent = parseInt(playerScore.textContent) + 1;
+        output.textContent = `You won! ${playerSelection} beats ${computerSelection}`;
         console.log(`You won! ${playerSelection} beats ${computerSelection}`);
         return 1;
     }
