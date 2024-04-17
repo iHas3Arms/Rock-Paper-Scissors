@@ -5,6 +5,7 @@ let allButtons = [buttonRock, buttonPaper, buttonScissors];
 
 let playerScore = document.getElementById("player-score");
 let computerScore = document.getElementById("cpu-score");
+let gameOver = false;
 
 let output = document.getElementById("output");
 
@@ -65,9 +66,17 @@ function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1, playerSelection.length);
     computerSelection = computerSelection[0].toUpperCase() + computerSelection.slice(1, computerSelection.length);
 
+    if (gameOver) {
+        computerScore.textContent = "0";
+        playerScore.textContent = "0";
+        output.style.transform = "scale(1)";
+        gameOver = false;
+    }
+
     if (result === 0) {
         computerScore.textContent = parseInt(computerScore.textContent) + 1;
         output.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+        checkGameOver();
         // console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
         return 0;
     } else if (result === 1) {
@@ -77,10 +86,25 @@ function playRound(playerSelection, computerSelection) {
     } else if (result === 2) {
         playerScore.textContent = parseInt(playerScore.textContent) + 1;
         output.textContent = `You won! ${playerSelection} beats ${computerSelection}`;
-        console.log(`You won! ${playerSelection} beats ${computerSelection}`);
+        checkGameOver();
+        // console.log(`You won! ${playerSelection} beats ${computerSelection}`);
         return 1;
     }
 
+}
+
+function checkGameOver() {
+    if (parseInt(playerScore.textContent) < 5 && parseInt(computerScore.textContent) < 5) return;
+    let winner = 5;
+    output.style.transform = "scale(1.25)";
+    if (winner === parseInt(playerScore.textContent)) {
+        output.textContent = `You win! You got 5 wins!`;
+        alert(`You win! You got 5 wins!`);
+    } else {
+        output.textContent = `You lose! The CPU got 5 wins before you!`;
+        alert(`You lose! The CPU got 5 wins before you!`);
+    }
+    gameOver = true;
 }
 
 // function playGame() {
